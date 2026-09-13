@@ -1,42 +1,10 @@
-function LearningPath() {
-  const steps = [
-    {
-      nomor: 1,
-      judul: "Pelajari Dasar Pemrograman",
-      deskripsi:
-        "Pelajari konsep dasar pemrograman seperti variabel, kondisi, perulangan, fungsi, dan struktur data.",
-      status: "Dasar",
-    },
-    {
-      nomor: 2,
-      judul: "Pelajari Web Development",
-      deskripsi:
-        "Pelajari HTML, CSS, JavaScript, dan konsep dasar bagaimana sebuah website bekerja.",
-      status: "Pemula",
-    },
-    {
-      nomor: 3,
-      judul: "Pelajari React.js",
-      deskripsi:
-        "Pelajari cara membuat aplikasi web interaktif menggunakan React.js.",
-      status: "Menengah",
-    },
-    {
-      nomor: 4,
-      judul: "Bangun Project",
-      deskripsi:
-        "Buat beberapa project untuk menerapkan kemampuan yang sudah dipelajari.",
-      status: "Praktik",
-    },
-    {
-      nomor: 5,
-      judul: "Persiapkan Karier",
-      deskripsi:
-        "Bangun portfolio, CV, dan persiapkan diri untuk mencari peluang kerja sebagai Software Developer.",
-      status: "Karier",
-    },
-  ];
+import { useLocation } from "react-router-dom";
 
+function LearningPath() {
+
+  const location = useLocation();
+  
+const steps = location.state?.learningPath || [];
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="mx-auto max-w-4xl">

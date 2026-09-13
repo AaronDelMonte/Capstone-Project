@@ -3,30 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 function Result() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const formData = location.state;
-
-  // Data dummy sementara
-  const recommendations = [
-    {
-      nama: "Software Developer",
-      persentase: 92,
-      deskripsi:
-        "Berfokus pada pembuatan dan pengembangan aplikasi serta sistem berbasis teknologi.",
-    },
-    {
-      nama: "Data Analyst",
-      persentase: 84,
-      deskripsi:
-        "Menganalisis data untuk menemukan informasi dan membantu pengambilan keputusan.",
-    },
-    {
-      nama: "UI/UX Designer",
-      persentase: 78,
-      deskripsi:
-        "Merancang tampilan dan pengalaman pengguna agar aplikasi mudah digunakan.",
-    },
-  ];
+  
+  const formData = location.state?.formData;
+const recommendations = location.state?.recommendations || [];
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
@@ -161,11 +140,17 @@ function Result() {
                 </div>
 
                 <button
-                  onClick={() => navigate("/learning-path")}
-                  className="mt-5 rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white hover:bg-blue-700"
-                >
-                  Lihat Learning Path →
-                </button>
+  onClick={() =>
+    navigate("/learning-path", {
+      state: {
+        learningPath: location.state?.learningPath,
+      },
+    })
+  }
+  className="mt-5 rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white hover:bg-blue-700"
+>
+  Lihat Learning Path →
+</button>
               </div>
             ))}
 

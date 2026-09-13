@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { submitAssessment } from "../services/mockApi";
 
 function Assessment() {
     const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ function Assessment() {
         ekstrakurikuler: "",
         aspirasi: "",
 });
+
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,12 +23,39 @@ function Assessment() {
 };
 
 const navigate = useNavigate();
-const handleSubmit = (e) => {
+
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  navigate("/result", {
-    state: formData,
-  });
+  if (
+  !formData.matematika ||
+  !formData.informatika ||
+  !formData.minat ||
+  !formData.ekstrakurikuler ||
+  !formData.aspirasi
+) {
+  alert("Silakan lengkapi semua data assessment terlebih dahulu.");
+  return;
+}
+
+  setLoading(true);
+
+  try {
+    const result = await submitAssessment(formData);
+
+    navigate("/result", {
+      state: {
+        formData: formData,
+        recommendations: result.recommendations,
+        learningPath: result.learningPath,
+      },
+    });
+  } catch (error) {
+    console.error("Gagal mengirim assessment:", error);
+    alert("Terjadi kesalahan. Silakan coba lagi.");
+  } finally {
+    setLoading(false);
+  }
 };
 
   return (
@@ -159,9 +189,10 @@ const handleSubmit = (e) => {
         <div className="mt-10 flex justify-end">
           <button
   onClick={handleSubmit}
+  disabled={loading}
   className="rounded-xl bg-blue-600 px-7 py-3 font-semibold text-white hover:bg-blue-700"
 >
-  Lihat Rekomendasi →
+  {loading ? "Memproses..." : "Lihat Hasil →"}
 </button>
         </div>
 
