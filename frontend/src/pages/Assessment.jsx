@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { submitAssessment } from "../services/mockApi";
+import { submitAssessment } from "../services/api";
 
 function Assessment() {
     const [formData, setFormData] = useState({
