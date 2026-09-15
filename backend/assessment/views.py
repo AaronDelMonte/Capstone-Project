@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .serializers import AssessmentSerializer
+from .models import Assessment
 
 
 class AssessmentView(APIView):
@@ -10,6 +11,8 @@ class AssessmentView(APIView):
         serializer = AssessmentSerializer(data=request.data)
 
         if serializer.is_valid():
+            Assessment.objects.create(**serializer.validated_data)
+            
             return Response(
                 {
                     "message": "Assessment berhasil diterima",
