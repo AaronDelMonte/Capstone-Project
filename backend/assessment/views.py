@@ -11,11 +11,12 @@ class AssessmentView(APIView):
         serializer = AssessmentSerializer(data=request.data)
 
         if serializer.is_valid():
-            Assessment.objects.create(**serializer.validated_data)
-            
+            assessment = Assessment.objects.create(**serializer.validated_data)
+
             return Response(
                 {
                     "message": "Assessment berhasil diterima",
+                    "assessment_id": assessment.id,
                     "recommendations": [
                         {
                             "nama": "Software Developer",
