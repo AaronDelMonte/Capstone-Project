@@ -63,7 +63,7 @@ if (
       state: {
         formData: formData,
         recommendations: result.recommendations,
-        learningPath: result.learningPath,
+        learningPaths: result.learningPaths,
       },
     });
   } catch (error) {
