@@ -90,12 +90,20 @@ function LearningPath() {
 
         {/* Back Button */}
         <div className="mt-8 text-center">
-          <button
-            onClick={() => navigate("/result")}
-            className="rounded-lg border border-gray-300 bg-white px-5 py-2.5 font-medium text-gray-700 hover:bg-gray-50"
-          >
-            ← Kembali ke Hasil
-          </button>
+         <button
+  onClick={() =>
+    navigate("/result", {
+      state: {
+        formData: location.state?.formData,
+        recommendations: location.state?.recommendations,
+        learningPaths: location.state?.learningPaths,
+      },
+    })
+  }
+  className="rounded-lg border border-gray-300 bg-white px-5 py-2.5 font-medium text-gray-700 hover:bg-gray-50"
+>
+  ← Kembali ke Hasil
+</button>
         </div>
 
       </div>

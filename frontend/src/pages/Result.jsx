@@ -187,11 +187,14 @@ function Result() {
                 <button
   onClick={() =>
     navigate("/learning-path", {
-      state: {
-        learningPath: learningPaths[career.profession] || [],
-        profession: career.profession,
-      },
-    })
+  state: {
+    learningPath: learningPaths[career.profession] || [],
+    profession: career.profession,
+    formData,
+    recommendations,
+    learningPaths,
+  },
+})
   }
   className="mt-5 rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white hover:bg-blue-700"
 >
