@@ -35,7 +35,10 @@ class AssessmentView(APIView):
                 "geography_score": assessment.geografi,
             }
 
-            recommendations = predict_career(student_data)
+            recommendations = predict_career(
+                student_data,
+                aspiration=assessment.aspirasi
+)
 
             # Buat Learning Path untuk setiap rekomendasi
             learning_paths = {}
