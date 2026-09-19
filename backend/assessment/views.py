@@ -13,7 +13,10 @@ class AssessmentView(APIView):
         serializer = AssessmentSerializer(data=request.data)
 
         if serializer.is_valid():
-            assessment = Assessment.objects.create(**serializer.validated_data)
+            # Simpan data assessment
+            assessment = Assessment.objects.create(
+                **serializer.validated_data
+            )
 
             student_data = {
                 "gender": assessment.gender,
@@ -33,19 +36,28 @@ class AssessmentView(APIView):
             }
 
             recommendations = predict_career(student_data)
-            top_profession = recommendations[0]["profession"]
-            learning_path = get_learning_path(top_profession)
+
+            # Buat Learning Path untuk setiap rekomendasi
+            learning_paths = {}
+
+            for recommendation in recommendations:
+                profession = recommendation["profession"]
+
+                learning_paths[profession] = get_learning_path(
+                    profession
+                )
 
             return Response(
-    {
-        "message": "Assessment berhasil diterima",
-        "assessment_id": assessment.id,
-        "recommendations": recommendations,
-        "learningPath": learning_path,
-    },
-    status=status.HTTP_200_OK,
-)
+                {
+                    "message": "Assessment berhasil diterima",
+                    "assessment_id": assessment.id,
+                    "recommendations": recommendations,
+                    "learningPaths": learning_paths,
+                },
+                status=status.HTTP_200_OK,
+            )
 
+    
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
