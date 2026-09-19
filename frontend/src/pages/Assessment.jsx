@@ -4,11 +4,19 @@ import { submitAssessment } from "../services/api";
 
 function Assessment() {
     const [formData, setFormData] = useState({
-        matematika: "",
-        informatika: "",
-        minat: "",
-        ekstrakurikuler: "",
-        aspirasi: "",
+ gender: "",
+  part_time_job: "",
+  absence_days: "",
+  matematika: "",
+  sejarah: "",
+  fisika: "",
+  kimia: "",
+  biologi: "",
+  bahasa_inggris: "",
+  geografi: "",
+  ekstrakurikuler: "",
+  jam_belajar: "",
+  aspirasi: "",
 });
 
     const [loading, setLoading] = useState(false);
@@ -27,11 +35,19 @@ const navigate = useNavigate();
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (
+if (
+  !formData.gender ||
+  !formData.part_time_job ||
+  formData.absence_days === "" ||
   !formData.matematika ||
-  !formData.informatika ||
-  !formData.minat ||
+  !formData.sejarah ||
+  !formData.fisika ||
+  !formData.kimia ||
+  !formData.biologi ||
+  !formData.bahasa_inggris ||
+  !formData.geografi ||
   !formData.ekstrakurikuler ||
+  !formData.jam_belajar ||
   !formData.aspirasi
 ) {
   alert("Silakan lengkapi semua data assessment terlebih dahulu.");
@@ -47,7 +63,7 @@ const handleSubmit = async (e) => {
       state: {
         formData: formData,
         recommendations: result.recommendations,
-        learningPath: result.learningPath,
+        learningPaths: result.learningPaths,
       },
     });
   } catch (error) {
@@ -78,7 +94,75 @@ const handleSubmit = async (e) => {
       </div>
 
       {/* Form */}
-      <div className="mx-auto mt-10 max-w-3xl rounded-2xl bg-white p-8 shadow-sm">
+<div className="mx-auto mt-10 max-w-3xl rounded-2xl bg-white p-8 shadow-sm">
+
+  {/* Data Siswa */}
+  <div>
+    <h2 className="text-xl font-semibold text-gray-900">
+      Data Siswa
+    </h2>
+
+    <p className="mt-1 text-sm text-gray-500">
+      Masukkan informasi dasar tentang dirimu.
+    </p>
+
+    <div className="mt-5 grid gap-5 sm:grid-cols-2">
+
+      {/* Gender */}
+      <div>
+        <label className="mb-2 block text-sm font-medium text-gray-700">
+          Jenis Kelamin
+        </label>
+
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+        >
+          <option value="">Pilih jenis kelamin</option>
+          <option value="male">Laki-laki</option>
+          <option value="female">Perempuan</option>
+        </select>
+      </div>
+
+      {/* Part-time Job */}
+      <div>
+        <label className="mb-2 block text-sm font-medium text-gray-700">
+          Memiliki pekerjaan part-time?
+        </label>
+
+        <select
+          name="part_time_job"
+          value={formData.part_time_job}
+          onChange={handleChange}
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+        >
+          <option value="">Pilih jawaban</option>
+          <option value="false">Tidak</option>
+          <option value="true">Ya</option>
+        </select>
+      </div>
+
+      {/* Absence */}
+      <div>
+        <label className="mb-2 block text-sm font-medium text-gray-700">
+          Jumlah Hari Tidak Hadir
+        </label>
+
+        <input
+          type="number"
+          name="absence_days"
+          value={formData.absence_days}
+          onChange={handleChange}
+          min="0"
+          placeholder="Contoh: 2"
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+        />
+      </div>
+
+    </div>
+  </div>
 
         {/* Nilai */}
         <div>
@@ -107,48 +191,102 @@ const handleSubmit = async (e) => {
 />
             </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">
-                Informatika
-              </label>
+          <div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    Sejarah
+  </label>
 
-              <input
-  type="number"
-  name="informatika"
-  value={formData.informatika}
-  onChange={handleChange}
-  placeholder="Contoh: 90"
-  className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
-/>
-            </div>
+  <input
+    type="number"
+    name="sejarah"
+    value={formData.sejarah}
+    onChange={handleChange}
+    placeholder="Contoh: 85"
+    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
 
-          </div>
-        </div>
+<div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    Fisika
+  </label>
 
-        {/* Minat */}
-        <div className="mt-10">
-          <h2 className="text-xl font-semibold text-gray-900">
-            2. Minat dan Hobi
-          </h2>
+  <input
+    type="number"
+    name="fisika"
+    value={formData.fisika}
+    onChange={handleChange}
+    placeholder="Contoh: 85"
+    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
 
-          <p className="mt-1 text-sm text-gray-500">
-            Ceritakan hal yang kamu sukai.
-          </p>
+<div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    Kimia
+  </label>
 
-          <textarea
-  name="minat"
-  value={formData.minat}
-  onChange={handleChange}
-  rows="4"
-  placeholder="Contoh: Saya suka komputer dan teknologi."
-  className="mt-5 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
-/>
+  <input
+    type="number"
+    name="kimia"
+    value={formData.kimia}
+    onChange={handleChange}
+    placeholder="Contoh: 85"
+    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
+
+<div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    Biologi
+  </label>
+
+  <input
+    type="number"
+    name="biologi"
+    value={formData.biologi}
+    onChange={handleChange}
+    placeholder="Contoh: 85"
+    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
+
+<div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    Bahasa Inggris
+  </label>
+
+  <input
+    type="number"
+    name="bahasa_inggris"
+    value={formData.bahasa_inggris}
+    onChange={handleChange}
+    placeholder="Contoh: 85"
+    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
+
+<div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    Geografi
+  </label>
+
+  <input
+    type="number"
+    name="geografi"
+    value={formData.geografi}
+    onChange={handleChange}
+    placeholder="Contoh: 85"
+    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
+</div>
         </div>
 
         {/* Ekstrakurikuler */}
         <div className="mt-10">
           <h2 className="text-xl font-semibold text-gray-900">
-            3. Ekstrakurikuler
+            2. Ekstrakurikuler
           </h2>
 
           <p className="mt-1 text-sm text-gray-500">
@@ -164,6 +302,27 @@ const handleSubmit = async (e) => {
   className="mt-5 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
 />
         </div>
+
+        {/* Jam Belajar */}
+<div className="mt-10">
+  <h2 className="text-xl font-semibold text-gray-900">
+    3. Jam Belajar Mandiri
+  </h2>
+
+  <p className="mt-1 text-sm text-gray-500">
+    Berapa jam biasanya kamu belajar sendiri dalam satu minggu?
+  </p>
+
+  <input
+    type="number"
+    name="jam_belajar"
+    value={formData.jam_belajar}
+    onChange={handleChange}
+    min="0"
+    placeholder="Contoh: 10"
+    className="mt-5 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
 
         {/* Aspirasi */}
         <div className="mt-10">
